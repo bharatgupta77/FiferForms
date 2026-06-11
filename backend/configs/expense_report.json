@@ -1,0 +1,55 @@
+{
+  "domain": "expense_report",
+  "label": "Expense Report",
+  "fields": [
+    {
+      "id": "vendor",
+      "label": "Vendor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "id": "category",
+      "label": "Category",
+      "type": "enum",
+      "required": true,
+      "options": ["Travel", "Meals", "Equipment", "Other"]
+    },
+    {
+      "id": "expense_date",
+      "label": "Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "receipt_number",
+      "label": "Receipt Number",
+      "type": "text",
+      "required": false,
+      "visible_when": { "field": "category", "equals": "Equipment" }
+    },
+    {
+      "id": "line_items",
+      "label": "Line Items",
+      "type": "group",
+      "repeating": true,
+      "required": true,
+      "fields": [
+        { "id": "description", "label": "Description", "type": "text", "required": true },
+        { "id": "quantity", "label": "Quantity", "type": "number", "required": true },
+        { "id": "unit_price", "label": "Unit Price", "type": "number", "required": true }
+      ]
+    },
+    {
+      "id": "total",
+      "label": "Total ($)",
+      "type": "number",
+      "derived": {
+        "operation": "sum_product",
+        "over": "line_items",
+        "factors": ["quantity", "unit_price"]
+      },
+      "user_overridable": false
+    }
+  ]
+}

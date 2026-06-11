@@ -1,0 +1,56 @@
+{
+  "domain": "workout_log",
+  "label": "Workout Log",
+  "fields": [
+    {
+      "id": "workout_date",
+      "label": "Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "workout_type",
+      "label": "Workout Type",
+      "type": "enum",
+      "required": true,
+      "options": ["Strength", "Cardio", "Flexibility"]
+    },
+    {
+      "id": "muscle_groups",
+      "label": "Muscle Groups",
+      "type": "multiselect",
+      "required": false,
+      "options": ["Chest", "Back", "Legs", "Shoulders", "Arms", "Core"],
+      "visible_when": { "field": "workout_type", "equals": "Strength" }
+    },
+    {
+      "id": "exercises",
+      "label": "Exercises",
+      "type": "group",
+      "repeating": true,
+      "required": true,
+      "fields": [
+        { "id": "name", "label": "Exercise", "type": "text", "required": true },
+        { "id": "sets", "label": "Sets", "type": "number", "required": true },
+        { "id": "reps", "label": "Reps", "type": "number", "required": true }
+      ]
+    },
+    {
+      "id": "duration_minutes",
+      "label": "Duration (min)",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "total_sets",
+      "label": "Total Sets",
+      "type": "number",
+      "derived": {
+        "operation": "sum",
+        "over": "exercises",
+        "field": "sets"
+      },
+      "user_overridable": false
+    }
+  ]
+}

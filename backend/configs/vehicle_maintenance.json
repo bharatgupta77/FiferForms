@@ -1,0 +1,54 @@
+{
+  "domain": "vehicle_maintenance",
+  "label": "Vehicle Maintenance Log",
+  "fields": [
+    {
+      "id": "vehicle",
+      "label": "Vehicle",
+      "type": "text",
+      "required": true
+    },
+    {
+      "id": "service_type",
+      "label": "Service Type",
+      "type": "enum",
+      "required": true,
+      "options": ["Oil Change", "Tire Rotation", "Brake Service", "Other"]
+    },
+    {
+      "id": "service_date",
+      "label": "Service Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "id": "mileage",
+      "label": "Mileage",
+      "type": "number",
+      "required": true
+    },
+    {
+      "id": "parts_replaced",
+      "label": "Parts Replaced",
+      "type": "text",
+      "required": false,
+      "visible_when": { "field": "service_type", "equals": "Brake Service" }
+    },
+    {
+      "id": "cost",
+      "label": "Cost ($)",
+      "type": "number",
+      "required": false
+    },
+    {
+      "id": "days_since_service",
+      "label": "Days Since Service",
+      "type": "number",
+      "derived": {
+        "operation": "days_since",
+        "from": "service_date"
+      },
+      "user_overridable": false
+    }
+  ]
+}
