@@ -55,18 +55,24 @@ You should see:
 You can also explore all endpoints at: `http://localhost:8000/docs`
 
 ---
-
 ## 2. Run the Android app
 
-1. Open **Android Studio**
-2. Choose **Open** and select the `android/` folder inside this repo
-3. Wait for **Gradle sync** to complete (progress bar at the bottom)
-4. Start an **emulator** — Device Manager → Create Device → Pixel 6 →
-   API 34 (Google APIs) → Finish → Start
-5. Press the green **Run** button (▶)
+1. Open **Android Studio** and select the `android/` folder
+2. Wait for **Gradle sync** to complete
+3. **Choose your device:**
 
-The app connects to `http://10.0.2.2:8000` — the emulator's built-in
-alias for your Mac's localhost where the backend is running.
+   **For Emulator (Recommended):**
+   - Device Manager → Create Device → Pixel 6 (or any recent device) →
+     API 34 (Google APIs) → Finish → Start
+   - *Note: I used Pixel 6 with API 34 for development and testing*
+   > The app connects to `http://10.0.2.2:8000` — the emulator's built-in alias for your Mac's localhost where the backend is running.
+
+   **For Physical Device:**
+   - Enable Developer Options and USB Debugging
+   - Connect via USB (same Wi-Fi network as your computer)
+
+4. **Run the app** — Press the green Run button (▶) or Shift+F10
+
 
 > **Physical device?** Connect via USB and change `BASE_URL` in
 > `android/app/src/main/java/com/fifer/forms/RetrofitClient.kt` from
