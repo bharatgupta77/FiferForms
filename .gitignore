@@ -5,3 +5,11 @@ android/.idea/
 android/local.properties
 **/__pycache__/
 *.pyc
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# System files
+.DS_Store
+**/.DS_Store
