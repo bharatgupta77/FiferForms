@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: fifer
+      POSTGRES_PASSWORD: fifer
+      POSTGRES_DB: records
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U fifer -d records"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://fifer:fifer@db:5432/records
+      # Default keeps everything runnable with no API key or account.
+      LLM_PROVIDER: ${LLM_PROVIDER:-stub}
+      # Only read when LLM_PROVIDER=anthropic; safe to leave unset otherwise.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    depends_on:
+      db:
+        # Wait until Postgres actually accepts connections, not just "started".
+        condition: service_healthy
+    volumes:
+      # Mount configs so you can add/edit a domain without rebuilding the image.
+      - ./configs:/app/configs:ro
+
+volumes:
+  pgdata:
