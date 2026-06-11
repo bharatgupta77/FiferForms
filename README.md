@@ -106,15 +106,18 @@ This is the core claim — adding a form type requires **zero code changes**:
 
 1. Create a new file: `backend/configs/your_domain.json`
    (copy `expense_report.json` as a starting point)
-2. Restart the API:
-   ```bash
-   docker compose restart api
-   ```
+2. **No restart needed** — the `configs/` folder is mounted as a live
+   Docker volume, so the API reads new files immediately on the next request
 3. Open the app — your new domain appears in the list automatically
 4. Tap it — the full form renders, with all field types, visibility
    rules, and derived fields working
 
-No Android rebuild. No backend code change. Just a JSON file.
+No Android rebuild. No backend code change. No Docker restart. Just a JSON file.
+
+> **Tested:** a `book_log` domain (reading log with title, author, status,
+> genres as multiselect, reading sessions as a repeating group, and a
+> derived total-pages field) was added this way — fully working form,
+> zero code changes on either side.
 
 ---
 

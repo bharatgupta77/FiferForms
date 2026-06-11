@@ -120,7 +120,7 @@ end-to-end.
 
 ---
 
-
+## The config schema
 
 A domain is `{ domain, label, fields: [...] }`. Each field has `id`, `label`,
 `type`, and optional properties depending on type.
@@ -278,8 +278,17 @@ config; the mechanism lives in the code. Nothing is duplicated.
 ## How to add a new domain
 
 1. Create `backend/configs/<name>.json`
-2. Run `docker compose restart api`
-3. The domain appears in the app automatically — zero code changes
+2. That's it — **no restart needed.**
+
+The `configs/` folder is mounted as a live Docker volume, so the API reads
+new files immediately on the next request. This is a direct consequence of
+the config-only design: domain data is never baked into the image.
+
+If you've edited an existing config (not added a new one), a restart picks
+it up cleanly:
+```bash
+docker compose restart api
+```
 
 ---
 
