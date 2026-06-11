@@ -228,6 +228,15 @@ Per-field warnings fire with a real LLM; in stub mode the stub returns clean
 values by design (verified via unit tests that pass crafted bad values through
 the reconciler directly).
 
+The stub's known limitations are intentional — it is not trying to replicate
+a real LLM. It won't extract free text like a vendor name, resolve overlapping
+options (e.g. `"fiction"` matches within `"non-fiction"`), or distinguish
+context (`"jan 12"` will have its `12` extracted as a number rather than
+recognised as part of a date). A real LLM understands sentence structure and
+context, so these cases resolve naturally when `LLM_PROVIDER=anthropic` is
+used. The stub exists to exercise the *pipeline* and the reconciler's
+robustness — not to demonstrate extraction quality.
+
 **Known boundary:** Smart Fill pre-fills top-level fields only, not rows inside
 a repeating group. Populating group rows raises unanswerable questions — how
 many rows does "a few items at $20 each" imply? I scoped it to top-level fields
